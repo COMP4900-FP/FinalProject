@@ -3,6 +3,9 @@
 #include <sys/mman.h>
 
 
+#define GREENHOUSE_SERVER_NAME "greenhouse_server"
+
+
 // water distribution
 typedef struct distribute_water {
 	uint16_t type;

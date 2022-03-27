@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "server.h"
 #include <unistd.h>
+#include <sys/iofunc.h>
+#include <sys/dispatch.h>
 
 
 // messages will be received as a receive_t
@@ -16,6 +18,12 @@ typedef union {
 
 
 int main(void) {
+
+	// register name and create a channel
+	name_attach_t *attach;
+	if ((attach = name_attach(NULL, GREENHOUSE_SERVER_NAME, 0)) == NULL) {
+		return EXIT_FAILURE;
+	}
 
 	puts("Done!");
 	return EXIT_SUCCESS;
