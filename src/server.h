@@ -5,6 +5,11 @@
 
 #define GREENHOUSE_SERVER_NAME "greenhouse_server"
 
+#define DISTRIBUTE_WATER_MSG_TYPE (_IO_MAX+200)
+#define CHECK_HUMIDITY_MSG_TYPE (_IO_MAX+201)
+#define CHECK_TEMP_MSG_TYPE (_IO_MAX+202)
+#define CHANGE_LIGHT_MSG_TYPE (_IO_MAX+203)
+
 
 // water distribution
 typedef struct distribute_water {
