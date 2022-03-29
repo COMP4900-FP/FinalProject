@@ -10,7 +10,8 @@
 #define CHECK_TEMP_MSG_TYPE (_IO_MAX+202)
 #define CHANGE_LIGHT_MSG_TYPE (_IO_MAX+203)
 
-
+#define TRUE 1
+#define FALSE 0
 // water distribution
 typedef struct distribute_water {
 	uint16_t type;

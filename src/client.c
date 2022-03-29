@@ -10,31 +10,38 @@
 #include "server.h"
 #include <unistd.h>
 
+extern int loop_lights(int);
+extern int loop_temp(int);
+extern int loop_humidity(int);
+extern int loop_soil(int);
+
+
+int startRunner(int(fun)(int)){
+	//Eventually can replace with a ChannelCreate call
+	int chid = name_open(GREENHOUSE_SERVER_NAME, 0);
+	return fun(chid);
+}
+
 int main(void) {
 	pid_t f1, f2, f3;
 	int stat;
 	if ((f1 = fork()) == 0){
 		if ((f2 = fork()) == 0){
-			puts("Component A");
-			return EXIT_SUCCESS;
+			return startRunner(loop_lights);
 
 		} else {
-			puts("Component B");
+			startRunner(loop_temp);
 			waitpid(f2, &stat, 0);
 		}
 		return EXIT_SUCCESS;
 	} else {
 		if ((f3 = fork()) == 0){
-			puts("Component C");
-			return EXIT_SUCCESS;
-
+			return startRunner(loop_humidity);
 		} else {
-			puts("Component D");
-
+			startRunner(loop_soil);
 			waitpid(f3, &stat, 0);
 		}
 		waitpid(f1, &stat, 0);
 	}
-	puts("Done!");
 	return EXIT_SUCCESS;
 }
