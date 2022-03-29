@@ -23,7 +23,7 @@ build/server.o: src/server.c src/server.h
 
 
 clean:
-	rm -fr build
+	rm -fr build/*
 
 rebuild: clean all
 
