@@ -9,9 +9,10 @@ LD = $(CC)
 rwildcard = $(wildcard $(addprefix $1/*.,$2)) $(foreach d,$(wildcard $1/*),$(call rwildcard,$d,$2))
 
 
-all: build/client.o build/server.o
+all: build/client.o build/server.o build/generatorFunctions.o
 		$(LD) -o build/client build/client.o
 		$(LD) -o build/server build/server.o
+		
 		
 
 #Compiling rule
@@ -21,6 +22,8 @@ build/client.o: src/client.c src/server.h
 build/server.o: src/server.c src/server.h
 	$(CC) -c src/server.c -o build/server.o -Wall -fmessage-length=0
 
+build/generatorFunctions.o: src/generatorFunctions.c src/generatorFunctions.h
+	$(CC) -c src/generatorFunctions.c -o build/generatorFunctions.o -Wall -fmessage-length=0
 
 clean:
 	rm -fr build
