@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "server.h"
 #include <unistd.h>
 #include <sys/iofunc.h>
 #include <sys/dispatch.h>
+#include "server.h"
 
 
 // messages will be received as a receive_t
@@ -61,15 +61,19 @@ int main(void) {
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
 				printf("distribute_water message received\n");
+				//MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
 				printf("check_humidity message received\n");
+				//MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
 				printf("check_temperature message received\n");
+				//MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:
 				printf("change_light message received\n");
+				//MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;
 			default:
 				printf("unknown message received\n");
