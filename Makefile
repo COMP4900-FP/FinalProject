@@ -8,6 +8,9 @@ CFLAGS = -Wall -fmessage-length=0
 #Macro to expand files recursively: parameters $1 -  directory, $2 - extension, i.e. cpp
 rwildcard = $(wildcard $(addprefix $1/*.,$2)) $(foreach d,$(wildcard $1/*),$(call rwildcard,$d,$2))
 
+INCLUDES = \
+	-I src \
+	-I src/clients\
 
 all: client server
 		
@@ -28,19 +31,19 @@ build/client.o: src/client.c src/server.h
 	$(CC) -c src/client.c -o build/client.o $(CFLAGS)
 	
 build/server.o: src/server.c src/server.h
-	$(CC) -c src/server.c -o build/server.o $(CFLAGS)
+	$(CC) -c src/server.c -o build/server.o $(CFLAGS) $(INCLUDES)
 
-build/humidity.o: src/clients/humidity.c
-	$(CC) -c src/clients/humidity.c -o build/humidity.o $(CFLAGS)
+build/humidity.o: src/clients/humidity.c src/server.h
+	$(CC) -c src/clients/humidity.c -o build/humidity.o $(CFLAGS) $(INCLUDES)
 
-build/soil.o: src/clients/soil.c
-	$(CC) -c src/clients/soil.c -o build/soil.o $(CFLAGS)
+build/soil.o: src/clients/soil.c src/server.h
+	$(CC) -c src/clients/soil.c -o build/soil.o $(CFLAGS) $(INCLUDES)
 
-build/temp.o: src/clients/temp.c
-	$(CC) -c src/clients/temp.c -o build/temp.o $(CFLAGS)
+build/temp.o: src/clients/temp.c src/server.h
+	$(CC) -c src/clients/temp.c -o build/temp.o $(CFLAGS) $(INCLUDES)
 
-build/light.o: src/clients/light.c
-	$(CC) -c src/clients/light.c -o build/light.o $(CFLAGS)
+build/light.o: src/clients/light.c src/server.h
+	$(CC) -c src/clients/light.c -o build/light.o $(CFLAGS) $(INCLUDES)
 
 
 upload: server client 
