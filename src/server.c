@@ -18,6 +18,8 @@ typedef union {
 
 
 // function declarations go up here
+int adjustNumInRange(int value, int low, int high);
+int changeLights(int status);
 
 
 int main(void) {
@@ -67,6 +69,8 @@ int main(void) {
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
 				printf("check_humidity message received\n");
+				// sample use of the adjustNumInRange function
+				// check_humidity_resp.updated_humidity_level = adjustNumInRange(msg.check_humidity.humidity_level, 50, 90);
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
@@ -88,3 +92,28 @@ int main(void) {
 }
 
 // functions for handling individual components can go down here
+
+/**
+ * Range Helper Function - many of the clients will require some way to determine if a value is outside
+ * of a given range, and then adjust that value to be within the range if needed. This function can be
+ * used in those cases
+ */
+int adjustNumInRange(int value, int low, int high) {
+	if (value > high) {
+		printf("Value is too high (%d)! Lowering to %d...\n", value, high);
+		return high;
+	} else if (value < low) {
+		printf("Value is too low (%d)! Raising to %d...\n", value, low);
+		return low;
+	}
+	return value;
+}
+
+/**
+ * Adjusts light status
+ * 		lights on (true)   -> lights off (false)
+ * 		lights off (false) -> lights on (true)
+ */
+int changeLights(int status){
+	return (status == FALSE) ? TRUE: FALSE;
+}

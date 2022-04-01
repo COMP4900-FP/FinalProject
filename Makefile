@@ -1,5 +1,5 @@
 #Compiler definitions
-MAKEFLAGS := --jobs=$(shell nproc)
+#MAKEFLAGS := --jobs=$(shell nproc)
 CC = qcc -Vgcc_nto$(PLATFORM)
 CXX = q++ -Vgcc_nto$(PLATFORM)_cxx
 LD = $(CC)
