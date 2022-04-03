@@ -1,5 +1,5 @@
 #Compiler definitions
-MAKEFLAGS := --jobs=$(shell nproc)
+#MAKEFLAGS := --jobs=$(shell nproc)
 CC = qcc -Vgcc_nto$(PLATFORM)
 CXX = q++ -Vgcc_nto$(PLATFORM)_cxx
 LD = $(CC)
@@ -12,7 +12,7 @@ INCLUDES = \
 	-I src \
 	-I src/clients\
 
-all: client server
+all: client server build/generatorFunctions.o
 		
 		
 #Linking
@@ -25,6 +25,7 @@ build/client: build/client.o build/humidity.o build/light.o build/soil.o build/t
 
 build/server: build/server.o
 	$(LD) -o build/server build/server.o
+
 
 #Compiling rule
 build/client.o: src/client.c src/server.h
@@ -44,6 +45,9 @@ build/temp.o: src/clients/temp.c src/server.h
 
 build/light.o: src/clients/light.c src/server.h
 	$(CC) -c src/clients/light.c -o build/light.o $(CFLAGS) $(INCLUDES)
+
+build/generatorFunctions.o: src/generatorFunctions.c src/generatorFunctions.h
+	$(CC) -c src/generatorFunctions.c -o build/generatorFunctions.o $(CFLAGS)
 
 
 upload: server client 
