@@ -61,7 +61,6 @@ int main(void) {
 				printf("unknown pulse with code = %d received\n", msg.pulse.code);
 			}
 		} else {
-cbains@NullDev [main|MERGING1 ↑1|●7⚑1] ..-workspace/FinalProject 
 			// received a message -- handle message based on type
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
