@@ -61,12 +61,13 @@ int main(void) {
 				printf("unknown pulse with code = %d received\n", msg.pulse.code);
 			}
 		} else {
+cbains@NullDev [main|MERGING1 ↑1|●7⚑1] ..-workspace/FinalProject 
 			// received a message -- handle message based on type
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
 				printf("distribute_water message received (%d)\n", msg.distribute_water.saturation);
 				// update saturation level
-				distribute_water_resp.targetSaturation = adjustNumInRange(msg.distribute_water.saturation, 50, 90);
+				distribute_water_resp.saturation = adjustNumInRange(msg.distribute_water.saturation, 50, 90);
 				MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
