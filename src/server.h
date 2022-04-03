@@ -61,6 +61,7 @@ typedef struct check_humidity_resp {
 typedef struct check_temperature {
 	uint16_t type;
 	int temp;
+	int light;
 } check_temperature_t;
 
 typedef struct check_temperature_resp {

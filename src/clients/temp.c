@@ -13,7 +13,8 @@ int *loop_temp(int chid, void* data){
         lockShmem(shmem);
         check_temperature_t req = {
             .type = CHECK_TEMP_MSG_TYPE,
-            .temp = getTemp(shmem->lightData.light)};
+            .temp = getTemp(shmem->lightData.light),
+			.light = shmem->lightData.light};
         printf("Temp: Got current temp of %d using current light setting of %s\n",req.temp, BOOL_TO_LIGHT(shmem->lightData.light));
 
         check_temperature_resp_t res;
