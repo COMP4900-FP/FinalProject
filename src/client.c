@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "server.h"
 #include <unistd.h>
+#include <sys/iofunc.h>
+#include <sys/dispatch.h>
 
 extern int loop_lights(int);
 extern int loop_temp(int);
