@@ -67,7 +67,7 @@ int main(void) {
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
 				printf("distribute_water message received (%d)\n", msg.distribute_water.saturation);
-				distribute_water_resp.targetSaturation = 90;
+				distribute_water_resp.saturation = INVALID;
 				// sample usage of the activateSprinklers function
 				// distribute_water_resp.status = activateSprinklers();
 				MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
@@ -76,21 +76,21 @@ int main(void) {
 				printf("check_humidity message received (%d)\n", msg.check_humidity.humidity_level);
 				// sample usage of the adjustNumInRange function
 				// check_humidity_resp.updated_humidity_level = adjustNumInRange(msg.check_humidity.humidity_level, 50, 90);
-				check_humidity_resp.updated_humidity_level = 25;
+				check_humidity_resp.updated_humidity_level = INVALID;
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
 				printf("check_temperature message received (%d)\n", msg.check_temperature.temp);
 				// sample usage of the adjustTempByTimeOfDay function
 				// check_temperature_resp.updated_temp = adjustTempByTimeOfDay(msg.check_temperature.temp);
-				check_temperature_resp.updated_temp = 27;
+				check_temperature_resp.updated_temp = INVALID;
 				MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:
 				hod = msg.change_light.hourOfDay;
 				printf("change_light message received (HOD: %d)\n", hod);
 				// sample usage of the changeLights function
-				// change_light_resp.updated_light_status = changeLights(msg.change_light.light_status);
+				// change_light_resp.updated_light_status = changeLights(msg.change_lightlightsActivated_status);
 				change_light_resp.updated_light_status = hod >= 7 && hod  <= 18;
 				MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;

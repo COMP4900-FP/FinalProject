@@ -11,6 +11,8 @@
 #include <unistd.h>
 #include <sys/iofunc.h>
 #include <sys/dispatch.h>
+#include "clients.h"
+unsigned long start;
 
 extern int loop_lights(int,void*);
 extern int loop_temp(int,void*);
@@ -32,17 +34,18 @@ void initSHMem(){
     pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
     pthread_mutex_init(&shared->dataMutex, &attr);
 	shared->lightData.light = FALSE;
-	shared->soilData.targetSaturation = 50;
-	shared->tempData.targetTemp = 25;
-	shared->humidityData.targetHumidity = 60;
+	shared->soilData.saturation = 50;
+	shared->tempData.temp = 25;
+	shared->humidityData.humidity = 90;
 }
 
 int main(void) {
 	srand((int)time(NULL));
+	start =  (unsigned long)time(NULL);
 	shared = mmap(NULL, sizeof(shared_data_t), PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 	initSHMem();
 
-	pid_t f1, f2, f3;
+	pid_t f1, f2, f3, f4;
 	int stat;
 	if ((f1 = fork()) == 0){
 		if ((f2 = fork()) == 0){
@@ -55,7 +58,21 @@ int main(void) {
 		return EXIT_SUCCESS;
 	} else {
 		if ((f3 = fork()) == 0){
-			return startRunner(loop_humidity);
+			if ((f4 = fork())==0){
+				return startRunner(loop_humidity);
+			} else {
+				while (TRUE){
+					if (HOUR_OF_DAY % 24 == 0){
+						printf("A New day has dawned. 0:00\n\n");
+						//Delay for at least a hour
+						sleep(2);
+					}
+					//Delay for a half hour
+					sleep(1);
+				}
+				waitpid(f4, &stat, 0);
+			}
+			
 		} else {
 			startRunner(loop_soil);
 			waitpid(f3, &stat, 0);
