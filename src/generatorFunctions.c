@@ -19,11 +19,10 @@ float getHumidity(){
 
 //Returns a temperature value between 0 and 30
 //Assume the values are Celsius
-float getTemp(){
-	int randRange = 30;
+float getTemp(uint8_t areLightsOn){
+	int randRange = 15;
 	float temp = 0.00;
-	srand((int)time(NULL));
 	temp = (float)rand()/(float)(RAND_MAX/randRange);
-
+	temp += areLightsOn?15:5;
 	return temp;
 }

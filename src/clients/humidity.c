@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "server.h"
 
-int loop_humidity(int);
+int loop_humidity(int,void*);
 
-int loop_humidity(int chid){
+int loop_humidity(int chid, void* data){
     printf("Humidity - Started (%d)\n", chid);
     check_humidity_t req = {.type = CHECK_TEMP_MSG_TYPE};
     check_humidity_resp_t res;

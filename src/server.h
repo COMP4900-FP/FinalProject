@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <sys/iomsg.h>
 #include <sys/mman.h>
-
+#include <pthread.h>
 
 #define GREENHOUSE_SERVER_NAME "greenhouse_server"
 
@@ -12,6 +12,24 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define lockShmem(A) (pthread_mutex_lock(&(A)->dataMutex))
+#define unlockShmem(A) (pthread_mutex_unlock(&(A)->dataMutex))
+
+
+typedef struct shared_data {
+	pthread_mutex_t dataMutex;
+	pthread_cond_t  dataCondVar;
+	struct {
+		uint8_t light;
+	} lightData;
+	struct {} soilData;
+	struct {
+		int targetTemp;
+	} tempData;
+	struct {} humidityData;
+} shared_data_t;
+
 
 // water distribution
 typedef struct distribute_water {

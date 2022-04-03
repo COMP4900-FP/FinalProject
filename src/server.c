@@ -78,9 +78,10 @@ int main(void) {
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
-				printf("check_temperature message received\n");
+				printf("check_temperature message received (%d)\n", msg.check_temperature.temp);
 				// sample usage of the adjustTempByTimeOfDay function
 				// check_temperature_resp.updated_temp = adjustTempByTimeOfDay(msg.check_temperature.temp);
+
 				MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:

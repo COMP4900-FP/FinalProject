@@ -20,8 +20,8 @@ client: build/client
 
 server: build/server
 
-build/client: build/client.o build/humidity.o build/light.o build/soil.o build/temp.o
-	$(LD) -o build/client build/client.o build/humidity.o build/light.o build/soil.o build/temp.o
+build/client: build/client.o build/humidity.o build/light.o build/soil.o build/temp.o build/generatorFunctions.o
+	$(LD) -o build/client build/client.o build/humidity.o build/light.o build/soil.o build/temp.o build/generatorFunctions.o
 
 build/server: build/server.o
 	$(LD) -o build/server build/server.o
@@ -47,7 +47,7 @@ build/light.o: src/clients/light.c src/server.h
 	$(CC) -c src/clients/light.c -o build/light.o $(CFLAGS) $(INCLUDES)
 
 build/generatorFunctions.o: src/generatorFunctions.c src/generatorFunctions.h
-	$(CC) -c src/generatorFunctions.c -o build/generatorFunctions.o $(CFLAGS)
+	$(CC) -c src/generatorFunctions.c -o build/generatorFunctions.o $(CFLAGS) $(INCLUDES)
 
 
 upload: server client 

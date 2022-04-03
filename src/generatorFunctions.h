@@ -18,7 +18,7 @@
 
 
 float getHumidity();
-float getTemp();
+float getTemp(uint8_t);
 
 
 #endif /* SRC_GENERATORFUNCTIONS_H_ */
