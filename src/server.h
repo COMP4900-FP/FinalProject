@@ -72,6 +72,7 @@ typedef struct check_temperature_resp {
 typedef struct change_light {
 	uint16_t type;
 	int light_status;
+	int hourOfDay;
 } change_light_t;
 
 typedef struct change_light_resp {

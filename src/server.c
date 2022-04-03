@@ -29,7 +29,7 @@ int main(void) {
 	puts("Starting Greenhouse Monitoring System Simulation...");
 
 	// define variables
-	int rcvid;
+	int rcvid, hod;
 	name_attach_t *attach;
 
 	// define message variables
@@ -83,14 +83,15 @@ int main(void) {
 				printf("check_temperature message received (%d)\n", msg.check_temperature.temp);
 				// sample usage of the adjustTempByTimeOfDay function
 				// check_temperature_resp.updated_temp = adjustTempByTimeOfDay(msg.check_temperature.temp);
-
+				check_temperature_resp.updated_temp = 27;
 				MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:
-				printf("change_light message received\n");
+				hod = msg.change_light.hourOfDay;
+				printf("change_light message received (HOD: %d)\n", hod);
 				// sample usage of the changeLights function
 				// change_light_resp.updated_light_status = changeLights(msg.change_light.light_status);
-				change_light_resp.updated_light_status = TRUE;
+				change_light_resp.updated_light_status = hod >= 7 && hod  <= 18;
 				MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;
 			default:

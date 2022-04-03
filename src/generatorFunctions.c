@@ -30,7 +30,7 @@ uint8_t getTemp(uint8_t areLightsOn){
 uint8_t getSoilMoisture(uint8_t temp){
 	float soil = 0.00;
 	soil = (float)rand()/(float)(RAND_MAX/10);
-	soil += 20;
+	soil += 36;
 	if (temp > 22){
 		soil -= (temp-22);
 	} 

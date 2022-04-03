@@ -56,18 +56,3 @@ clean:
 	rm -fr build/*.o
 
 rebuild: clean all
-
-#Inclusion of dependencies (object files to source and includes)
--include $(OBJS:%.o=%.d)
-
-#Testing stuff, ignore
-build/watch.o: src/watch.c 
-	$(CC) -c src/watch.c -o build/watch.o $(CFLAGS)
-
-uploadw:  watch
-	scp build/watch root@$(VMIP):/tmp
-	
-watch: build/watch
-
-build/watch: build/watch.o
-	$(LD) -o build/watch build/watch.o
