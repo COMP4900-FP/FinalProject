@@ -6,9 +6,10 @@
  */
 #include "generatorFunctions.h"
 
-//Returns a humidity value between 1 and 10
+//Returns a humidity value between 1 and 100
+//Assume the values are standard humidity measurement units (in percentages)
 float getHumidity(){
-	int randRange = 9;
+	int randRange = 99;
 	float humidity = 0.00;
 	srand((int)time(NULL));
 	humidity = (float)rand()/(float)(RAND_MAX/randRange) + 1.00;
