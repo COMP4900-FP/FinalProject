@@ -18,6 +18,10 @@ typedef union {
 
 
 // function declarations go up here
+int adjustNumInRange(int value, int low, int high);
+int changeLights(int status);
+int activateSprinklers();
+int adjustTempByTimeOfDay(int temp);
 
 
 int main(void) {
@@ -63,18 +67,26 @@ int main(void) {
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
 				printf("distribute_water message received\n");
+				// sample usage of the activateSprinklers function
+				// distribute_water_resp.status = activateSprinklers();
 				MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
 				printf("check_humidity message received\n");
+				// sample usage of the adjustNumInRange function
+				// check_humidity_resp.updated_humidity_level = adjustNumInRange(msg.check_humidity.humidity_level, 50, 90);
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
 				printf("check_temperature message received\n");
+				// sample usage of the adjustTempByTimeOfDay function
+				// check_temperature_resp.updated_temp = adjustTempByTimeOfDay(msg.check_temperature.temp);
 				MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:
 				printf("change_light message received\n");
+				// sample usage of the changeLights function
+				// change_light_resp.updated_light_status = changeLights(msg.change_light.light_status);
 				MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;
 			default:
@@ -88,3 +100,53 @@ int main(void) {
 }
 
 // functions for handling individual components can go down here
+
+/**
+ * Range Helper Function - many of the clients will require some way to determine if a value is outside
+ * of a given range, and then adjust that value to be within the range if needed. This function can be
+ * used in those cases
+ */
+int adjustNumInRange(int value, int low, int high) {
+	if (value > high) {
+		printf("Value is too high (%d)! Lowering to %d...\n", value, high);
+		return high;
+	} else if (value < low) {
+		printf("Value is too low (%d)! Raising to %d...\n", value, low);
+		return low;
+	}
+	return value;
+}
+
+/**
+ * Adjusts light status
+ * 		lights on (true)   -> lights off (false)
+ * 		lights off (false) -> lights on (true)
+ */
+int changeLights(int status) {
+	return (status == FALSE) ? TRUE: FALSE;
+}
+
+/**
+ * Simulates sprinklers being turned on, running for 2 hours (2 seconds for the simulation),
+ * and then returning
+ */
+int activateSprinklers() {
+	printf("Sprinklers Activated\n");
+	sleep(2);
+	return 0;
+}
+
+
+/**
+ * Valid temperature is dependent on the time of day (light status)
+ */
+int adjustTempByTimeOfDay(int temp) {
+	// NOTE --> need some way to store the current time of day (global var? shared mem?)
+	if (1) {
+		// during the day
+		return adjustNumInRange(temp, 24, 30);
+	} else {
+		// at night
+		return adjustNumInRange(temp, 15, 24);
+	}
+}
