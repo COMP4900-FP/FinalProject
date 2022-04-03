@@ -9,8 +9,8 @@ CFLAGS = -Wall -fmessage-length=0
 rwildcard = $(wildcard $(addprefix $1/*.,$2)) $(foreach d,$(wildcard $1/*),$(call rwildcard,$d,$2))
 
 INCLUDES = \
-	-I src \
-	-I src/clients\
+	-Isrc \
+	-Isrc/clients/include\
 
 all: client server build/generatorFunctions.o
 		
@@ -34,16 +34,16 @@ build/client.o: src/client.c src/server.h
 build/server.o: src/server.c src/server.h
 	$(CC) -c src/server.c -o build/server.o $(CFLAGS) $(INCLUDES)
 
-build/humidity.o: src/clients/humidity.c src/server.h
+build/humidity.o: src/clients/humidity.c src/server.h src/clients.h
 	$(CC) -c src/clients/humidity.c -o build/humidity.o $(CFLAGS) $(INCLUDES)
 
-build/soil.o: src/clients/soil.c src/server.h
+build/soil.o: src/clients/soil.c src/server.h src/clients.h
 	$(CC) -c src/clients/soil.c -o build/soil.o $(CFLAGS) $(INCLUDES)
 
-build/temp.o: src/clients/temp.c src/server.h
+build/temp.o: src/clients/temp.c src/server.h src/clients.h
 	$(CC) -c src/clients/temp.c -o build/temp.o $(CFLAGS) $(INCLUDES)
 
-build/light.o: src/clients/light.c src/server.h
+build/light.o: src/clients/light.c src/server.h src/clients.h
 	$(CC) -c src/clients/light.c -o build/light.o $(CFLAGS) $(INCLUDES)
 
 build/generatorFunctions.o: src/generatorFunctions.c src/generatorFunctions.h

@@ -66,15 +66,17 @@ int main(void) {
 			// received a message -- handle message based on type
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
-				printf("distribute_water message received\n");
+				printf("distribute_water message received (%d)\n", msg.distribute_water.saturation);
+				distribute_water_resp.targetSaturation = 90;
 				// sample usage of the activateSprinklers function
 				// distribute_water_resp.status = activateSprinklers();
 				MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
-				printf("check_humidity message received\n");
+				printf("check_humidity message received (%d)\n", msg.check_humidity.humidity_level);
 				// sample usage of the adjustNumInRange function
 				// check_humidity_resp.updated_humidity_level = adjustNumInRange(msg.check_humidity.humidity_level, 50, 90);
+				check_humidity_resp.updated_humidity_level = 25;
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
@@ -88,6 +90,7 @@ int main(void) {
 				printf("change_light message received\n");
 				// sample usage of the changeLights function
 				// change_light_resp.updated_light_status = changeLights(msg.change_light.light_status);
+				change_light_resp.updated_light_status = TRUE;
 				MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;
 			default:

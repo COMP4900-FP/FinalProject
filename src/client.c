@@ -19,6 +19,7 @@ extern int loop_soil(int,void*);
 
 shared_data_t* shared = NULL;
 
+
 int startRunner(int(fun)(int, void*)){
 	//Eventually can replace with a ChannelCreate call
 	int chid = name_open(GREENHOUSE_SERVER_NAME, 0);
@@ -31,6 +32,9 @@ void initSHMem(){
     pthread_mutexattr_setpshared(&attr, PTHREAD_PROCESS_SHARED);
     pthread_mutex_init(&shared->dataMutex, &attr);
 	shared->lightData.light = FALSE;
+	shared->soilData.targetSaturation = 50;
+	shared->tempData.targetTemp = 25;
+	shared->humidityData.targetHumidity = 60;
 }
 
 int main(void) {

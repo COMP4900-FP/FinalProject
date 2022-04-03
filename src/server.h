@@ -23,21 +23,26 @@ typedef struct shared_data {
 	struct {
 		uint8_t light;
 	} lightData;
-	struct {} soilData;
+	struct {
+		int targetSaturation;
+	} soilData;
 	struct {
 		int targetTemp;
 	} tempData;
-	struct {} humidityData;
+	struct {
+		int targetHumidity;
+	} humidityData;
 } shared_data_t;
 
 
 // water distribution
 typedef struct distribute_water {
 	uint16_t type;
+	uint8_t saturation;
 } distribute_water_t;
 
 typedef struct distribute_water_resp {
-	int status;
+	uint8_t targetSaturation;
 } distribute_water_resp_t;
 
 

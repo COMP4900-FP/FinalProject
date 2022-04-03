@@ -17,8 +17,8 @@
 #include <time.h>
 
 
-float getHumidity();
-float getTemp(uint8_t);
-
+uint8_t getHumidity(uint8_t, uint8_t);
+uint8_t getTemp(uint8_t);
+uint8_t getSoilMoisture(uint8_t);
 
 #endif /* SRC_GENERATORFUNCTIONS_H_ */
