@@ -19,7 +19,7 @@ typedef struct distribute_water {
 } distribute_water_t;
 
 typedef struct distribute_water_resp {
-	int placeholder;
+	int status;
 } distribute_water_resp_t;
 
 
