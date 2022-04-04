@@ -51,46 +51,45 @@ int main(void) {
 			// received a pulse
 			switch (msg.pulse.code) {
 			case _PULSE_CODE_DISCONNECT:
-				printf("disconnect pulse received\n");
+				printf("DISCONNECT received\n");
 				if (-1 == ConnectDetach(msg.pulse.scoid)) {
 					perror("ConnectDetach");
 				}
 			break;
 
 			default:
-				printf("unknown pulse with code = %d received\n", msg.pulse.code);
+				printf("UNKNOWN PULSE, code = %d\n", msg.pulse.code);
 			}
 		} else {
-cbains@NullDev [main|MERGING1 ↑1|●7⚑1] ..-workspace/FinalProject 
 			// received a message -- handle message based on type
 			switch (msg.type) {
 			case DISTRIBUTE_WATER_MSG_TYPE:
-				printf("distribute_water message received (%d)\n", msg.distribute_water.saturation);
+				printf("DIST WATER RECEIVED: (%d)\n", msg.distribute_water.saturation);
 				// update saturation level
 				distribute_water_resp.saturation = adjustNumInRange(msg.distribute_water.saturation, 50, 90);
 				MsgReply(rcvid, 0, &distribute_water_resp, sizeof(distribute_water_resp));
 				break;
 			case CHECK_HUMIDITY_MSG_TYPE:
-				printf("check_humidity message received (%d)\n", msg.check_humidity.humidity_level);
+				printf("CHK HUMIDITY RECEIVED: (%d)\n", msg.check_humidity.humidity_level);
 				// update humidity level
 				check_humidity_resp.updated_humidity_level = adjustNumInRange(msg.check_humidity.humidity_level, 50, 90);
 				MsgReply(rcvid, 0, &check_humidity_resp, sizeof(check_humidity_resp));
 				break;
 			case CHECK_TEMP_MSG_TYPE:
-				printf("check_temperature message received (%d)\n", msg.check_temperature.temp);
+				printf("CHK TEMP RECEIVED: (%d)\n", msg.check_temperature.temp);
 				// update temperature depending on the hour of day
 				check_temperature_resp.updated_temp = adjustTempByTimeOfDay(msg.check_temperature.temp, msg.check_temperature.light);
 				MsgReply(rcvid, 0, &check_temperature_resp, sizeof(check_temperature_resp));
 				break;
 			case CHANGE_LIGHT_MSG_TYPE:
 				hod = msg.change_light.hourOfDay;
-				printf("change_light message received (HOD: %d)\n", hod);
+				printf("CHG LIGHT RECEIVED: (HOD: %d)\n", hod);
 				// update lights depending on the hour of day
 				change_light_resp.updated_light_status = hod >= 7 && hod  <= 18;
 				MsgReply(rcvid, 0, &change_light_resp, sizeof(change_light_resp));
 				break;
 			default:
-				printf("unknown message received\n");
+				printf("UNKWN MESSAGE\n");
 				break;
 			}
 		}
