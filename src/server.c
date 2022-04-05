@@ -103,12 +103,13 @@ int main(void) {
  * Range Helper Function
  */
 int adjustNumInRange(int value, int low, int high) {
+	int newValue = (high - low)/2 + low;
 	if (value > high) {
-		printf("Value is too high (%d)! Lowering to %d...\n", value, high);
-		return high;
+		printf("Value is too high (%d)! Lowering to %d...\n", value, newValue);
+		return newValue;
 	} else if (value < low) {
-		printf("Value is too low (%d)! Raising to %d...\n", value, low);
-		return low;
+		printf("Value is too low (%d)! Raising to %d...\n", value, newValue);
+		return newValue;
 	}
 	// if values are unchanged, return -1
 	return -1;
