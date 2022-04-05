@@ -26,7 +26,7 @@ int loop_lights(int chid, void* data){
         MsgSend(chid, &req, sizeof(req), &res, sizeof(res));
         if (res.updated_light_status != INVALID && res.updated_light_status != shmem->lightData.light){
             shmem->lightData.light = res.updated_light_status;
-            printf("Light: Got new Light value of %s\n\n", BOOL_TO_LIGHT(res.updated_light_status));
+            printf("LIGHTt: New value: %s\n\n", BOOL_TO_LIGHT(res.updated_light_status));
         }
 
         unlockShmem(shmem);

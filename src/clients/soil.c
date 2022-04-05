@@ -34,14 +34,14 @@ int loop_soil(int chid, void* data){
             distribute_water_t req = {
                     .type = DISTRIBUTE_WATER_MSG_TYPE,
                     .saturation = soil};
-            printf("Soil: Got current saturation of %d using temp of %d\n",req.saturation, shmem->tempData.temp);
+            printf("SOIL: Current saturation: %d, using temp of %d\n",req.saturation, shmem->tempData.temp);
 
             distribute_water_resp_t res;
             MsgSend(chid, &req, sizeof(req), &res, sizeof(res));
             if (res.saturation != INVALID && shmem->soilData.saturation != res.saturation){
                 shmem->soilData.saturation = res.saturation;
                 soil = res.saturation;
-                printf("Soil: Got new target value of %d\n\n", res.saturation);
+                printf("SOIL: New value: %d\n\n", res.saturation);
             }
         }
         unlockShmem(shmem);

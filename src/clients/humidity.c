@@ -30,19 +30,19 @@ int loop_humidity(int chid, void* data){
                 shmem->soilData.saturation+= (humidity - 85) * 2;
                 MAX_BOUND(shmem->soilData.saturation, 95);
                 humidity = 80;
-                printf("Humidity: Got high! Some condensate fell into the soil. Soil saturation now at %d%%", shmem->soilData.saturation);
+                printf("HUMIDITY: Too high!. Soil saturation now at %d%%", shmem->soilData.saturation);
             }
              shmem->humidityData.humidity = humidity;
             check_humidity_t req = {
                 .type = CHECK_HUMIDITY_MSG_TYPE,
                 .humidity_level = humidity};
-            printf("Humidity: Got current humidity of %d%% using current temp of %d\n",req.humidity_level, shmem->tempData.temp);
+            printf("HUMIDITY: Current humidity: %d%%, using temp of %d\n",req.humidity_level, shmem->tempData.temp);
 
             check_humidity_resp_t res;
             MsgSend(chid, &req, sizeof(req), &res, sizeof(res));
             if (res.updated_humidity_level != INVALID && res.updated_humidity_level != shmem->humidityData.humidity){
                 shmem->humidityData.humidity = res.updated_humidity_level;
-                printf("Humidity: Setting target humidity to %d%%\n\n",res.updated_humidity_level);
+                printf("HUMIDITY: Target humidity to %d%%\n\n",res.updated_humidity_level);
             }
             
         } 

@@ -34,13 +34,13 @@ int *loop_temp(int chid, void* data){
             .type = CHECK_TEMP_MSG_TYPE,
 			.light = shmem->lightData.light,
             .temp = temp};
-        printf("Temp: Got current temp of %d using current light setting of %s\n",req.temp, BOOL_TO_LIGHT(shmem->lightData.light));
+        printf("TEMP: Current temp: %d, using light setting of %s\n",req.temp, BOOL_TO_LIGHT(shmem->lightData.light));
         check_temperature_resp_t res;
         MsgSend(chid, &req, sizeof(req), &res, sizeof(res));
         if (res.updated_temp != INVALID && shmem->tempData.temp != res.updated_temp){
             shmem->tempData.temp = res.updated_temp;
             temp = res.updated_temp;
-            printf("Temp: Got new target value of %d\n\n", res.updated_temp);
+            printf("TEMP: New value: %d\n\n", res.updated_temp);
         }
 
         end:
